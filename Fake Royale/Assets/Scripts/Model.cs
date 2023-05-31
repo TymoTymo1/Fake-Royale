@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class Model : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Tower[] towers;
+    public List<GameObject> team1Cards;
+    public List<GameObject> team2Cards;
 
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(int id, float damage)
     {
-        
+        towers[id].TakeDamage(damage);
     }
 }
