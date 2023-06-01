@@ -12,4 +12,9 @@ public class Model : MonoBehaviour
     {
         towers[id].TakeDamage(damage);
     }
+
+    public Tower getTower()
+    {
+        return towers[0];
+    }
 }

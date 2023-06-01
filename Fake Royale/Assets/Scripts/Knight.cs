@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Knight : MonoBehaviour
 {
@@ -9,9 +10,11 @@ public class Knight : MonoBehaviour
 
     public Model model;
 
+    public NavMeshAgent agent;
+
     void Start()
     {
-        
+        agent.SetDestination(model.getTower().gameObject.transform.position);
     }
 
     void Update()
