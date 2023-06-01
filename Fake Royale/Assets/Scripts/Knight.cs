@@ -8,18 +8,23 @@ public class Knight : MonoBehaviour
     public float speed = 10f;
     public float damage = 4;
 
-    public Model model;
+    Model model;
 
     public NavMeshAgent agent;
 
+    public Transform destination;
+
     void Start()
     {
+        model = GameObject.Find("Model").GetComponent<Model>();
+        agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(model.getTower().gameObject.transform.position);
+        agent.SetDestination(destination.position);
     }
 
     void Update()
     {
-        transform.Translate(new Vector3(0, 0, speed * Time.deltaTime));
+        //transform.Translate(new Vector3(0, 0, speed * Time.deltaTime));
     }
 
     private void OnCollisionEnter(Collision collision)
