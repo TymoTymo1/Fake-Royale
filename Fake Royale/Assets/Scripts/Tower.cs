@@ -8,10 +8,12 @@ public class Tower : MonoBehaviour
     private bool team;
 
     public int id;
-    // Start is called before the first frame update
+    // Getting the model for later actions
+    Model model;
+
     void Start()
     {
-        
+        model = GameObject.Find("Model").GetComponent<Model>();
     }
 
     // Update is called once per frame
