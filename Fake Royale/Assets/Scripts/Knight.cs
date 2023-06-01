@@ -3,23 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Knight : MonoBehaviour
+public class Knight : Entity
 {
     public float speed = 10f;
     public float damage = 4;
 
-    public Model model;
+    private Model model;
 
     public NavMeshAgent agent;
 
+    private bool team = false;
+
     void Start()
     {
-        agent.SetDestination(model.getTower().gameObject.transform.position);
+        model = GameObject.Find("Model").GetComponent<Model>();
+        agent = GetComponent<NavMeshAgent>();
+        Tower dest = model.GetNearestEnemyTowerFrom(transform, team);
+        agent.SetDestination(dest.transform.position);
     }
 
     void Update()
     {
-        transform.Translate(new Vector3(0, 0, speed * Time.deltaTime));
     }
 
     private void OnCollisionEnter(Collision collision)

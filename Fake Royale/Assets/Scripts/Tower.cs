@@ -5,15 +5,16 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
     private float hp;
-    private bool team;
+    public bool team;
 
     public int id;
     // Getting the model for later actions
     Model model;
 
-    void Start()
+    void OnEnable()
     {
         model = GameObject.Find("Model").GetComponent<Model>();
+        model.AddTower(this);
     }
 
     // Update is called once per frame
@@ -25,5 +26,15 @@ public class Tower : MonoBehaviour
     public void TakeDamage(float damage)
     {
         hp -= damage;
+    }
+
+    public bool GetTeam()
+    {
+        return team;
+    }
+
+    public int GetId()
+    {
+        return id;
     }
 }
