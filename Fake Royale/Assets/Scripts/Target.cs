@@ -10,10 +10,20 @@ public class Target : MonoBehaviour
     public bool isInAir;
     protected Model model;
 
-    private void OnEnable()
+    private HealthBar healthBar;
+    private GameObject canvas;
+
+    private void Start()
     {
         model = GameObject.Find("Model").GetComponent<Model>();
         model.AddTarget(this);
+        canvas = Resources.Load<GameObject>("Canvas");
+        //healthBar = canvas.transform.Find("Healthbar").GetComponent<HealthBar>();
+        GameObject instant = Instantiate(canvas, transform.position, transform.rotation, transform);
+        BoxCollider boxCollider = GetComponent<BoxCollider>();
+        instant.GetComponent<RectTransform>().position+=Vector3.up * boxCollider.size.y * 1.5f;
+       
+      
     }
     public bool GetTeam()
     {

@@ -92,16 +92,7 @@ public class Model : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
-            {
-            Ray inputRay = cam.ScreenPointToRay(Input.mousePosition);
-
-            if(Physics.Raycast(inputRay , out RaycastHit hit))
-            {
-                GameObject newModel =  Instantiate(testModel);
-                newModel.transform.position = hit.point;
-            }
-        }
+        
     }
 
     // Later we will do this the other way around the model should spawn targets, for now we do this the other way around for testing porpousessdasda

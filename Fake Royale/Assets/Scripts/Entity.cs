@@ -21,15 +21,11 @@ public class Entity : Target
 
     [SerializeField] float attackRange;
 
-    private void OnEnable()
-    {
-        agent = GetComponent<NavMeshAgent>();
-    }
     private void Start()
     {
-
+        agent = GetComponent<NavMeshAgent>();
         Target attackTarget = model.GetNearestTargetFrom(this);
-
+        
         SetDestination(attackTarget.transform.position);
 
         if (Vector3.Distance(attackTarget.transform.position, transform.position) < attackRange)
