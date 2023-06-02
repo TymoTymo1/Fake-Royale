@@ -122,7 +122,7 @@ MonoBehaviour:
   damageOnEntites: 4
   damageOnBuildings: 0
   intervall: 1
-  attackRange: 10
+  attackRange: 2
   speed: 10
   damage: 4
 --- !u!195 &-7756856508234438598

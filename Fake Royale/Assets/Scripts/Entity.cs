@@ -56,7 +56,7 @@ public class Entity : Target
     }
     public override void TargetStart()
     {
-        attackRange = 10f; // TODO
+       // attackRange; // TODO
         agent = GetComponent<NavMeshAgent>();   
         SetDestination(model.GetNearestTargetFrom(this));
     }
