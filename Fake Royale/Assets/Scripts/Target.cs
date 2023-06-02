@@ -13,7 +13,7 @@ public class Target : MonoBehaviour
     private HealthBar healthBar;
     private GameObject canvas;
 
-    private void Start()
+    private void Awake()
     {
         model = GameObject.Find("Model").GetComponent<Model>();
         model.AddTarget(this);
