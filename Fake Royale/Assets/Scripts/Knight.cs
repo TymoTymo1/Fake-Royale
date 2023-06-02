@@ -12,10 +12,6 @@ public class Knight : Entity
     {
     }
 
-    void Awake()
-    {
-
-    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<Tower>() == null) return;
