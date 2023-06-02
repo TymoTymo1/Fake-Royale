@@ -4,35 +4,111 @@ using UnityEngine;
 
 public class Model : MonoBehaviour
 {
-    private Tower[] towers = new Tower[6];
-    public List<Entity> team1Cards;
-    public List<Entity> team2Cards;
 
-    public void TakeDamage(int id, float damage)
-    {
-        towers[id].TakeDamage(damage);
-    }
+    public List<Target> team1TargetsAlife = new List<Target>();
+    public List<Target> team2TargetsAlife = new List<Target>();
 
-    public void AddTower(Tower tower)
-    {
-        towers[tower.GetId()] = tower;
-    }
+    [SerializeField] GameObject testModel;
+    [SerializeField] Camera cam;
 
-    public Tower GetNearestEnemyTowerFrom(Transform from, bool team)
+
+    public Target GetNearestTargetFrom(Target attacker)
     {
-        int minId = -1;
-        float minDistance = float.MaxValue;
-        foreach (Tower t in towers)
+        List<Target> validTargets = GetValidTargets(attacker);
+
+        float minimumDistance = -1;
+        Target closestTargetYet = null;
+        foreach (Target t in validTargets)
         {
-            if (t.GetTeam() == team) continue;
-            float distance = Vector3.Distance(t.transform.position, from.position);
-            if (distance < minDistance)
+            float dist = Vector3.Distance(t.gameObject.transform.position, attacker.gameObject.transform.position);
+
+            if(minimumDistance == -1)
             {
-                minDistance = distance;
-                minId = t.GetId();
+                minimumDistance = dist;
+                closestTargetYet = t;
+                break;
+            }
+            if(dist < minimumDistance)
+            {
+                minimumDistance = dist;
+                closestTargetYet = t;
             }
         }
 
-        return towers[minId];
+
+        return closestTargetYet;
+
+    }
+    public List<Target> GetValidTargets(Target attacker)
+    {
+        List<Target> targetList;
+
+        if (attacker.GetTeam() == true) targetList = team1TargetsAlife;
+        else targetList = team2TargetsAlife;
+
+        List<Target> validTargets = new List<Target>();
+
+        // Buildings can attack any Target
+        if (attacker is Building) return targetList;
+
+        foreach (Target t in targetList)
+        {
+            // Buildings are ALWAYS attackable
+            if (t is Building)
+            {
+                validTargets.Add(t);
+                break;
+            }
+
+            if(t is Entity)
+            {
+                Entity attackEntity = (Entity)attacker;
+                Entity targetEntity = (Entity)t;
+
+                if (targetEntity.canAttackEntities == false) break;
+                if (targetEntity.isInvisble) break;
+
+                if(targetEntity.GetIsInAir() && attackEntity.canAttackAir)
+                {
+                    targetList.Add(t);
+                    break;
+                }
+                if (!targetEntity.GetIsInAir() && attackEntity.canAttackFloor)
+                {
+                    targetList.Add(t);
+                    break;
+                }
+            }
+            
+        }
+
+        if (targetList.Count == 0) return null;
+
+        Debug.Log(targetList);
+        return targetList;
+    }
+
+    // Just a test for spawning entites dont worry this is going to be updated!
+
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0))
+            {
+            Ray inputRay = cam.ScreenPointToRay(Input.mousePosition);
+
+            if(Physics.Raycast(inputRay , out RaycastHit hit))
+            {
+                GameObject newModel =  Instantiate(testModel);
+                newModel.transform.position = hit.point;
+            }
+        }
+    }
+
+    // Later we will do this the other way around the model should spawn targets, for now we do this the other way around for testing porpousessdasda
+
+    public void AddTarget(Target t)
+    {
+        if (t.GetTeam() == false) team1TargetsAlife.Add(t);
+        if (t.GetTeam() == true) team2TargetsAlife.Add(t);
     }
 }
