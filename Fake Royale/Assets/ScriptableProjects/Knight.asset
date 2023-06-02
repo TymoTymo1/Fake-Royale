@@ -15,8 +15,8 @@ MonoBehaviour:
   name: Knight
   description: Cooler Ritta wallah billah
   icon: {fileID: 0}
-  rarity: 0
-  elexCost: 0
+  rarity: 1
+  elexCost: 3
   attack: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   level: 0
   fighter: {fileID: 9142905265091104773, guid: 508daa3d80c38494b99d521eb260f28f, type: 3}
