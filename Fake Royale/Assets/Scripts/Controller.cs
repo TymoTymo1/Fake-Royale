@@ -6,7 +6,7 @@ public class Controller : MonoBehaviour
 {
     private Model model;
     private Camera cam;
-    public GameObject testModel;
+    public Card testModel;
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +24,7 @@ public class Controller : MonoBehaviour
 
             if (Physics.Raycast(inputRay, out RaycastHit hit))
             {
-                GameObject newModel = Instantiate(testModel);
-                newModel.transform.position = hit.point;
+                model.SpawnTarget(testModel, hit.point, true);
             }
         }
     }

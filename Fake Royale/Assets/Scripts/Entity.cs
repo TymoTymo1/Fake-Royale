@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class Entity : Target
 {
-    NavMeshAgent agent;
     [SerializeField] public bool canAttackFloor;
     [SerializeField] public bool canAttackAir;
     [SerializeField] public bool canAttackEntities;
@@ -21,9 +20,10 @@ public class Entity : Target
 
     [SerializeField] float attackRange;
 
+    protected NavMeshAgent agent;
+
     public void SetDestination(Vector3 destination)
     {
-        agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(destination);
     }
     public void Attack(Target target)
@@ -45,5 +45,10 @@ public class Entity : Target
     }
     private void Update()
     {
+    }
+    public override void TargetStart()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        SetDestination(model.GetNearestTargetFrom(this).transform.position);
     }
 }

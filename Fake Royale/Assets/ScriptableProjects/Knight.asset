@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45052a2f808768140995a356b8b52e39, type: 3}
+  m_Name: Knight
+  m_EditorClassIdentifier: 
+  name: Knight
+  description: Cooler Ritta wallah billah
+  icon: {fileID: 0}
+  rarity: 0
+  elexCost: 0
+  attack: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  level: 0
+  fighter: {fileID: 9142905265091104773, guid: 508daa3d80c38494b99d521eb260f28f, type: 3}

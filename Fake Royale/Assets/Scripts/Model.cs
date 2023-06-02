@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Model : MonoBehaviour
 {
@@ -8,8 +9,10 @@ public class Model : MonoBehaviour
     public List<Target> team1TargetsAlife = new List<Target>();
     public List<Target> team2TargetsAlife = new List<Target>();
 
-    [SerializeField] GameObject testModel;
+    [SerializeField] Card testCard;
     [SerializeField] Camera cam;
+
+    [SerializeField] Transform targetParent;
 
 
     public Target GetNearestTargetFrom(Target attacker)
@@ -101,5 +104,14 @@ public class Model : MonoBehaviour
     {
         if (t.GetTeam() == false) team1TargetsAlife.Add(t);
         if (t.GetTeam() == true) team2TargetsAlife.Add(t);
+    }
+
+    // Spawning entites based of cards
+
+    public void SpawnTarget(Card info, Vector3 pos , bool team)
+    {
+
+        Instantiate(info.fighter, pos, Quaternion.Euler(0, 0, 0), targetParent);
+
     }
 }

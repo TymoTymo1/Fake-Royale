@@ -332,6 +332,7 @@
 -r:"Library/Bee/artifacts/500b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/500b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/500b0aE.dag/UnityEngine.UI.ref.dll"
+"Assets/ScriptableProjects/Card.cs"
 "Assets/Scripts/Building.cs"
 "Assets/Scripts/Controller.cs"
 "Assets/Scripts/Entity.cs"
