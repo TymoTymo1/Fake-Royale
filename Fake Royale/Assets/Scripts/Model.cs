@@ -19,19 +19,13 @@ public class Model : MonoBehaviour
     {
         List<Target> validTargets = GetValidTargets(attacker);
 
-        float minimumDistance = -1;
+        float minimumDistance = float.MaxValue;
         Target closestTargetYet = null;
         foreach (Target t in validTargets)
         {
             float dist = Vector3.Distance(t.gameObject.transform.position, attacker.gameObject.transform.position);
 
-            if(minimumDistance == -1)
-            {
-                minimumDistance = dist;
-                closestTargetYet = t;
-                break;
-            }
-            if(dist < minimumDistance)
+            if (dist < minimumDistance)
             {
                 minimumDistance = dist;
                 closestTargetYet = t;
@@ -71,12 +65,12 @@ public class Model : MonoBehaviour
                 if (targetEntity.canAttackEntities == false) break;
                 if (targetEntity.isInvisble) break;
 
-                if(targetEntity.GetIsInAir() && attackEntity.canAttackAir)
+                if(targetEntity.IsInAir() && attackEntity.canAttackAir)
                 {
                     targetList.Add(t);
                     break;
                 }
-                if (!targetEntity.GetIsInAir() && attackEntity.canAttackFloor)
+                if (!targetEntity.IsInAir() && attackEntity.canAttackFloor)
                 {
                     targetList.Add(t);
                     break;
@@ -110,8 +104,6 @@ public class Model : MonoBehaviour
 
     public void SpawnTarget(Card info, Vector3 pos , bool team)
     {
-
-        Instantiate(info.fighter, pos, Quaternion.Euler(0, 0, 0), targetParent);
-
+        Instantiate(info.fighter, pos, Quaternion.Euler(0, 0, 0), targetParent).GetComponent<Target>().Setup(team);
     }
 }

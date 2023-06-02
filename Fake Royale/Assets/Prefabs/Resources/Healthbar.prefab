@@ -60,7 +60,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0, g: 0.9622642, b: 0.09491197, a: 1}
+    m_NormalColor: {r: 0, g: 1, b: 0.085725546, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -102,6 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2851afad2b1cd5c43bb8d2600bb7a35b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 0
+  hp: 0
 --- !u!1 &5888092458836369112
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Target : MonoBehaviour
 {
     public int hp;
-    public int maxhp;
+    public int maxHp;
     public bool team;
     public bool isInAir;
     protected Model model;
@@ -15,6 +15,9 @@ public class Target : MonoBehaviour
 
     private void Start()
     {
+        maxHp = 100; // TODO
+
+
         model = GameObject.Find("Model").GetComponent<Model>();
         model.AddTarget(this);
 
@@ -23,6 +26,9 @@ public class Target : MonoBehaviour
         GameObject instant = Instantiate(canvas, transform.position, transform.rotation, transform);
         BoxCollider boxCollider = GetComponent<BoxCollider>();
         instant.GetComponent<RectTransform>().position+=Vector3.up * boxCollider.size.y * 1.5f;
+
+        healthBar = instant.transform.Find("Healthbar").GetComponent<HealthBar>();
+        healthBar.Setup(maxHp);
 
         TargetStart();
       
@@ -35,12 +41,13 @@ public class Target : MonoBehaviour
     {
         return hp;
     }
-    public int TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
-        if((hp - damage) <= 0) Kill();
-        return hp -= damage;
+        hp -= damage;
+        healthBar.TakeDamage(damage);
+        if (hp < 0) Kill();
     }
-    public bool GetIsInAir()
+    public bool IsInAir()
     {
         return isInAir;
     }
@@ -49,4 +56,9 @@ public class Target : MonoBehaviour
         // Killing stuff for view and logic; LATER!!!!
     }
     public virtual void TargetStart() { }
+
+    public void Setup(bool team)
+    {
+        this.team = team;
+    }
 }

@@ -8,10 +8,6 @@ public class Knight : Entity
     public float speed = 10f;
     public int damage = 4;
 
-    void Update()
-    {
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<Tower>() == null) return;

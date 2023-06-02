@@ -24,8 +24,17 @@ public class Controller : MonoBehaviour
 
             if (Physics.Raycast(inputRay, out RaycastHit hit))
             {
-                model.SpawnTarget(testModel, hit.point, true);
+                model.SpawnTarget(testModel, hit.point, false);
             }
         }
+        /*if (Input.GetMouseButtonDown(1))
+        {
+            Ray inputRay = cam.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(inputRay, out RaycastHit hit))
+            {
+                model.SpawnTarget(testModel, hit.point, false);
+            }
+        }*/
     }
 }

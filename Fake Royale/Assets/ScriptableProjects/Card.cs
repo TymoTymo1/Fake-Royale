@@ -19,4 +19,6 @@ public class Card : ScriptableObject
 
     [Header("// Gameobject that's going to fight in the arena")]
     public GameObject fighter;
+
+    public float attackRange;
 }

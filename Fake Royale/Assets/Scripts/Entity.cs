@@ -22,33 +22,42 @@ public class Entity : Target
 
     protected NavMeshAgent agent;
 
-    public void SetDestination(Vector3 destination)
+    private Target destination;
+
+    public void SetDestination(Target destination)
     {
-        agent.SetDestination(destination);
+        this.destination = destination;
+        agent.SetDestination(destination.transform.position);
     }
-    public void Attack(Target target)
+    public void Attack()
     {
-        if (Vector3.Distance(transform.position, target.transform.position) > attackRange) return;
+        if (Vector3.Distance(transform.position, destination.transform.position) > attackRange) return;
 
-        IEnumerator DoDamage()
-        {
-            if (target is Entity) target.TakeDamage(damageOnEntites);
-            
-            // Later:towers
-
-            yield return new WaitForSeconds(intervall);
-
-            if (Vector3.Distance(transform.position, target.transform.position)> attackRange) StopCoroutine(DoDamage());
-        }
-
-        StartCoroutine(DoDamage());
+        InvokeRepeating(nameof(DoDamage), intervall/2.0f, intervall);
     }
+
+    void DoDamage()
+    {
+        destination.TakeDamage(damageOnEntites);
+
+        if (Vector3.Distance(transform.position, destination.transform.position) > attackRange) CancelInvoke(nameof(DoDamage));
+    }
+
     private void Update()
     {
+        if (Vector3.Distance(destination.transform.position, transform.position) < attackRange)
+        {
+            if (!agent.isStopped)
+            {
+                agent.isStopped = true;
+                Attack();
+            }
+        }
     }
     public override void TargetStart()
     {
-        agent = GetComponent<NavMeshAgent>();
-        SetDestination(model.GetNearestTargetFrom(this).transform.position);
+        attackRange = 10f; // TODO
+        agent = GetComponent<NavMeshAgent>();   
+        SetDestination(model.GetNearestTargetFrom(this));
     }
 }

@@ -112,17 +112,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
-  maxhp: 0
+  maxHp: 0
   team: 0
   isInAir: 0
   canAttackFloor: 0
   canAttackAir: 0
   canAttackEntities: 0
   isInvisble: 0
-  damageOnEntites: 0
+  damageOnEntites: 4
   damageOnBuildings: 0
-  intervall: 0
-  attackRange: 0
+  intervall: 1
+  attackRange: 10
   speed: 10
   damage: 4
 --- !u!195 &-7756856508234438598
