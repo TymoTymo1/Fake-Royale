@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 647196332041053135}
+  - component: {fileID: -8772296722180088800}
   - component: {fileID: 7011287657776066862}
   - component: {fileID: 6995916145572711197}
   - component: {fileID: 2859224518984629752}
-  - component: {fileID: -8772296722180088800}
   - component: {fileID: -7756856508234438598}
   m_Layer: 0
   m_Name: Knight
@@ -36,6 +36,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8772296722180088800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9142905265091104773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1120f86aab03314e8525353e0e70fac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  maxHp: 0
+  team: 0
+  isInAir: 0
+  canAttackFloor: 0
+  canAttackAir: 0
+  canAttackEntities: 0
+  isInvisble: 0
+  damageOnEntites: 4
+  damageOnBuildings: 0
+  intervall: 1
+  attackRange: 5
+  speed: 10
+  damage: 4
 --- !u!33 &7011287657776066862
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -99,32 +125,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-8772296722180088800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9142905265091104773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1120f86aab03314e8525353e0e70fac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 0
-  maxHp: 0
-  team: 0
-  isInAir: 0
-  canAttackFloor: 0
-  canAttackAir: 0
-  canAttackEntities: 0
-  isInvisble: 0
-  damageOnEntites: 4
-  damageOnBuildings: 0
-  intervall: 1
-  attackRange: 2
-  speed: 10
-  damage: 4
 --- !u!195 &-7756856508234438598
 NavMeshAgent:
   m_ObjectHideFlags: 0
