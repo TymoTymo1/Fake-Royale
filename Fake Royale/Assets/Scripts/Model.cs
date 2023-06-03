@@ -32,7 +32,6 @@ public class Model : MonoBehaviour
             }
         }
 
-
         return closestTargetYet;
 
     }
@@ -79,9 +78,8 @@ public class Model : MonoBehaviour
             
         }
 
-        if (targetList.Count == 0) return null;
+        //if (targetList.Count == 0) return null;
 
-        Debug.Log(targetList);
         return targetList;
     }
 
