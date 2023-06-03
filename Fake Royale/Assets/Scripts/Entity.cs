@@ -27,11 +27,11 @@ public class Entity : Target
     public void SetDestination(Target destination)
     {
         this.destination = destination;
-        agent.SetDestination(destination.transform.position);
+        agent.SetDestination(destination.GetAttackPoint().position);
     }
     public void Attack()
     {
-        if (Vector3.Distance(transform.position, destination.transform.position) > attackRange) return;
+        if (Vector3.Distance(transform.position, destination.GetAttackPoint().position) > attackRange) return;
 
         InvokeRepeating(nameof(DoDamage), intervall/2.0f, intervall);
     }
@@ -40,12 +40,12 @@ public class Entity : Target
     {
         destination.TakeDamage(damageOnEntites);
 
-        if (Vector3.Distance(transform.position, destination.transform.position) > attackRange) CancelInvoke(nameof(DoDamage));
+        if (Vector3.Distance(transform.position, destination.GetAttackPoint().position) > attackRange) CancelInvoke(nameof(DoDamage));
     }
 
     private void Update()
     {
-        if (Vector3.Distance(destination.transform.position, transform.position) < attackRange)
+        if (Vector3.Distance(destination.GetAttackPoint().position, transform.position) < attackRange)
         {
             if (!agent.isStopped)
             {
@@ -56,8 +56,9 @@ public class Entity : Target
     }
     public override void TargetStart()
     {
-       // attackRange; // TODO
-        agent = GetComponent<NavMeshAgent>();   
+        attackRange = 2f; // TODO
+        agent = GetComponent<NavMeshAgent>();
+        attackPoint = transform;    
         SetDestination(model.GetNearestTargetFrom(this));
     }
 }

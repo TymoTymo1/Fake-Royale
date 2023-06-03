@@ -27,14 +27,14 @@ public class Controller : MonoBehaviour
                 model.SpawnTarget(testModel, hit.point, false);
             }
         }
-        /*if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
             Ray inputRay = cam.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(inputRay, out RaycastHit hit))
             {
-                model.SpawnTarget(testModel, hit.point, false);
+                model.SpawnTarget(testModel, hit.point, true);
             }
-        }*/
+        }
     }
 }
