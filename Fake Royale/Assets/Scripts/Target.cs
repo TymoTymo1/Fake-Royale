@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Target : MonoBehaviour
+public abstract class Target : MonoBehaviour
 {
     public int hp;
     public int maxHp;
@@ -18,6 +18,7 @@ public class Target : MonoBehaviour
     private void Start()
     {
         maxHp = 100; // TODO
+        hp = 100;
 
 
         model = GameObject.Find("Model").GetComponent<Model>();
@@ -46,6 +47,7 @@ public class Target : MonoBehaviour
     {
         hp -= damage;
         healthBar.TakeDamage(damage);
+        Debug.Log(hp);
         if (hp < 0) Kill();
     }
     public bool IsInAir()
@@ -58,11 +60,8 @@ public class Target : MonoBehaviour
         return attackPoint;
     }
 
-    public void Kill()
-    {
-        // Killing stuff for view and logic; LATER!!!!
-    }
-    public virtual void TargetStart() { }
+    public abstract void Kill();
+    public abstract void TargetStart();
 
     public void Setup(bool team)
     {

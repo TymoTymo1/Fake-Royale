@@ -10,8 +10,12 @@ public class Building : Target
 
     public override void TargetStart()
     {
-        attackPoint = GameObject.Find("AttackPoint").transform;
-        Debug.Log(attackPoint.position);
+        attackPoint = transform.Find("AttackPoint").transform;
         model.AddTarget(this);
+    }
+
+    public override void Kill()
+    {
+        // TODO
     }
 }

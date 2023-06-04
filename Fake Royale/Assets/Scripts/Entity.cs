@@ -54,11 +54,26 @@ public class Entity : Target
             }
         }
     }
+
+    IEnumerator RecalulateDestination()
+    {
+        while (isActiveAndEnabled)
+        {
+            SetDestination(model.GetNearestTargetFrom(this));
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
     public override void TargetStart()
     {
         attackRange = 2f; // TODO
         agent = GetComponent<NavMeshAgent>();
-        attackPoint = transform;    
-        SetDestination(model.GetNearestTargetFrom(this));
+        attackPoint = transform;
+        StartCoroutine(RecalulateDestination());
+    }
+
+    public override void Kill()
+    {
+        Destroy(gameObject);
     }
 }
