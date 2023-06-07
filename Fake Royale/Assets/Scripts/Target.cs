@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using System;
+
 
 public abstract class Target : MonoBehaviour
 {
@@ -14,6 +13,11 @@ public abstract class Target : MonoBehaviour
     private GameObject canvas;
 
     protected Transform attackPoint;
+
+    public delegate void KilledEventHandler(object source, EventArgs args);
+    public event KilledEventHandler Killed;
+
+    private bool killed = false;
 
     private void Start()
     {
@@ -47,8 +51,7 @@ public abstract class Target : MonoBehaviour
     {
         hp -= damage;
         healthBar.TakeDamage(damage);
-        Debug.Log(hp);
-        if (hp < 0) Kill();
+        if (hp < 0 && !killed) Kill();
     }
     public bool IsInAir()
     {
@@ -60,7 +63,20 @@ public abstract class Target : MonoBehaviour
         return attackPoint;
     }
 
-    public abstract void Kill();
+    public void Kill()
+    {
+        OnKilled();
+        killed = true;
+        Destroy(gameObject);
+    }
+
+    protected virtual void OnKilled()
+    {
+        if (Killed != null)
+        {
+            Killed(this, EventArgs.Empty);
+        }
+    }
     public abstract void TargetStart();
 
     public void Setup(bool team)
@@ -68,5 +84,7 @@ public abstract class Target : MonoBehaviour
         model = GameObject.Find("Model").GetComponent<Model>();
         this.team = team;
         model.AddTarget(this);
+        Killed += model.OnKilled;
     }
+
 }

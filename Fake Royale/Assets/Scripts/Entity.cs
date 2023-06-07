@@ -38,6 +38,7 @@ public class Entity : Target
 
     void DoDamage()
     {
+        if (destination == null) return;
         destination.TakeDamage(damageOnEntites);
 
         if (Vector3.Distance(transform.position, destination.GetAttackPoint().position) > attackRange) CancelInvoke(nameof(DoDamage));
@@ -45,6 +46,7 @@ public class Entity : Target
 
     private void Update()
     {
+        if (destination == null) return;
         if (Vector3.Distance(destination.GetAttackPoint().position, transform.position) < attackRange)
         {
             if (!agent.isStopped)
@@ -55,13 +57,28 @@ public class Entity : Target
         }
     }
 
-    IEnumerator RecalulateDestination()
+    IEnumerator CalulateDestination()
     {
         while (isActiveAndEnabled)
         {
-            SetDestination(model.GetNearestTargetFrom(this));
+            RecalculateDestination();
             yield return new WaitForSeconds(0.2f);
         }
+    }
+
+    public void RecalculateDestination()
+    {
+        SetDestination(model.GetNearestTargetFrom(this));
+    }
+
+    public Target GetDestination()
+    {
+        return destination;
+    }
+
+    public void EnableAgent()
+    {
+        agent.isStopped = false;
     }
 
     public override void TargetStart()
@@ -69,11 +86,6 @@ public class Entity : Target
         attackRange = 2f; // TODO
         agent = GetComponent<NavMeshAgent>();
         attackPoint = transform;
-        StartCoroutine(RecalulateDestination());
-    }
-
-    public override void Kill()
-    {
-        Destroy(gameObject);
+        StartCoroutine(CalulateDestination());
     }
 }

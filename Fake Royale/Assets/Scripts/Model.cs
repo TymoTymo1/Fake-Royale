@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using System;
 
 public class Model : MonoBehaviour
 {
@@ -13,6 +13,7 @@ public class Model : MonoBehaviour
     [SerializeField] Camera cam;
 
     [SerializeField] Transform targetParent;
+
 
 
     public Target GetNearestTargetFrom(Target attacker)
@@ -81,6 +82,26 @@ public class Model : MonoBehaviour
         //if (targetList.Count == 0) return null;
 
         return targetList;
+    }
+
+    // Event called when any object is killed
+    public void OnKilled(object source, EventArgs args)
+    {
+        Target killed = (Target)source;
+        bool team = killed.GetTeam();
+        (team ? team1TargetsAlife : team2TargetsAlife).Remove(killed);
+        List<Target> toUpdate = team ? team1TargetsAlife : team2TargetsAlife;
+        foreach (Target t in toUpdate) {
+            if (t.Equals(source)) continue;
+            if (t is Entity)
+            {
+                Entity entity = (Entity)t;  
+                if (entity.GetDestination().Equals(killed)) {
+                    entity.RecalculateDestination();
+                    entity.EnableAgent();
+                }
+            }
+        }
     }
 
     // Just a test for spawning entites dont worry this is going to be updated!

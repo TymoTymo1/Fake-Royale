@@ -24,4 +24,11 @@ public class Tower : Building
     {
         return id;
     }
+
+    public override void TargetStart()
+    {
+        attackPoint = transform.Find("AttackPoint").transform;
+        model.AddTarget(this);
+        Killed += model.OnKilled;
+    }
 }
