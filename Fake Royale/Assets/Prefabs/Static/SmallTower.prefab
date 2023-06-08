@@ -1961,7 +1961,7 @@ Transform:
   - {fileID: 3457528864123688526}
   - {fileID: 4583027363384594451}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &-2535830891696362805
 MonoBehaviour:
@@ -1988,7 +1988,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7957008509812868803}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 3, y: 3.3, z: 3}
