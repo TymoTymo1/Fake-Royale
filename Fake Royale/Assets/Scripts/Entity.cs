@@ -57,6 +57,11 @@ public class Entity : Target
         }
     }
 
+    public void StopAttack()
+    {
+        CancelInvoke(nameof(DoDamage));
+    }
+
     IEnumerator CalulateDestination()
     {
         while (isActiveAndEnabled)

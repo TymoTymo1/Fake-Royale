@@ -89,15 +89,17 @@ public class Model : MonoBehaviour
     {
         Target killed = (Target)source;
         bool team = killed.GetTeam();
-        (team ? team1TargetsAlife : team2TargetsAlife).Remove(killed);
+        (team ? team2TargetsAlife : team1TargetsAlife).Remove(killed);
         List<Target> toUpdate = team ? team1TargetsAlife : team2TargetsAlife;
         foreach (Target t in toUpdate) {
             if (t.Equals(source)) continue;
             if (t is Entity)
             {
                 Entity entity = (Entity)t;  
+                // look for new destination and stop attacking the old one
                 if (entity.GetDestination().Equals(killed)) {
                     entity.RecalculateDestination();
+                    entity.StopAttack();
                     entity.EnableAgent();
                 }
             }
