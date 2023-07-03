@@ -38,7 +38,7 @@ public class Entity : Target
     void DoDamage()
     {
         if (destination == null) return;
-        destination.TakeDamage(damageOnEntites);
+        destination.TakeDamage(damageOnEntites, true);
 
         if (Vector3.Distance(transform.position, destination.GetAttackPoint().position) > attackRange) CancelInvoke(nameof(DoDamage));
     }
@@ -89,7 +89,7 @@ public class Entity : Target
     {
         attackRange = 2f; // TODO
         agent = GetComponent<NavMeshAgent>();
-        attackPoint = transform;
+        attackPoint = transform;    
         StartCoroutine(CalulateDestination());
     }
 }

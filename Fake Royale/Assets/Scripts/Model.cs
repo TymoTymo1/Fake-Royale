@@ -46,6 +46,32 @@ public class Model : MonoBehaviour
         return closestTargetYet;
 
     }
+
+    public void DamageAllTargetsInRadius(Vector3 origin, float radius, float damage, Target attacker)
+    {
+        List<Target> valid = GetValidTargets(attacker);
+        List<Target> toKill = new List<Target>();
+
+        foreach (Target target in valid)
+        {
+            Vector3 targetPos = target.GetAttackPoint().position;
+            float distance = Vector3.Distance(origin, targetPos);
+            if (distance < radius)
+            {
+                float damageDealt = (distance / radius) * damage;
+                if (target.TakeDamage((int)damageDealt, false))
+                {
+                    toKill.Add(target);
+                }
+            }
+        }
+
+        foreach (Target target in toKill)
+        {
+            target.Kill();
+        }
+    }
+
     public List<Target> GetValidTargets(Target attacker)
     {
         List<Target> targetList;

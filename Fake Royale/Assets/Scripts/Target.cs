@@ -49,12 +49,14 @@ public abstract class Target : MonoBehaviour
     {
         return hp;
     }
-    public void TakeDamage(int damage)
+    public bool TakeDamage(int damage, bool kill)
     {
         hp -= damage;
         healthBar.TakeDamage(damage);
-        if (hp < 0 && !killed) Kill();
+        if (hp < 0 && !killed) { if (kill) { Kill(); } return true; }
+        else return false;
     }
+
     public bool IsInAir()
     {
         return isInAir;

@@ -12,13 +12,11 @@ public class Tower : Building
     private const float cooldown = 1f;
     private float timer = cooldown;
 
+    private Transform canon;
+
     [SerializeField] GameObject bullet;
 
-    private float range = 10f;
-
-    void OnEnable()
-    {
-    }
+    private float range = 20f;
 
     private void RecalculateDestination()
     {
@@ -40,6 +38,7 @@ public class Tower : Building
         {
             return;
         }
+        canon.LookAt(new Vector3(canon.transform.position.x, target.GetAttackPoint().position.y, canon.transform.position.z));
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
@@ -50,8 +49,9 @@ public class Tower : Building
 
     private void ShootBullet()
     {
-        GameObject shot = Instantiate(bullet, transform.position, transform.rotation);
-        shot.GetComponent<Bullet>().SetupBullet(target.GetAttackPoint().position);
+        GameObject shot = Instantiate(bullet, canon.position, transform.rotation);
+        Vector3 offset = new Vector3(0f, -target.GetAttackPoint().localScale.y*1.5f, 0f);
+        shot.GetComponent<Bullet>().SetupBullet(target.GetAttackPoint().position + offset, this);
     }
 
 
@@ -64,6 +64,7 @@ public class Tower : Building
     public override void TargetStart()
     {
         attackPoint = transform.Find("AttackPoint").transform;
+        canon = transform.Find("Canon").Find("Canon");
         model.AddTarget(this);
         Killed += model.OnKilled;
         target = model.GetNearestTargetFrom(this);
