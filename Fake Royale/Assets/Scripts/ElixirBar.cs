@@ -60,6 +60,10 @@ public class ElixirBar : MonoBehaviour
     {
         if (elixir >= 10)
         {
+            foreach (ElexirFrameGraphics graphic in elexirFrames)
+            {
+                graphic.Fill();
+            }
             return;
         }
         elixir++;

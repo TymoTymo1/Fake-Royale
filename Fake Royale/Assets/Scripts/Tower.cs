@@ -12,7 +12,8 @@ public class Tower : Building
     private const float cooldown = 1f;
     private float timer = cooldown;
 
-    private Transform canon;
+    [SerializeField]  private Transform canon;
+    [SerializeField]  private Transform canonWithWeels;
 
     [SerializeField] GameObject bullet;
 
@@ -38,7 +39,16 @@ public class Tower : Building
         {
             return;
         }
-        canon.LookAt(new Vector3(canon.transform.position.x, target.GetAttackPoint().position.y, canon.transform.position.z));
+
+        // Rotation on Y-Axis
+        Vector3 targetPositionSameHeight = new Vector3(target.GetAttackPoint().position.x, canonWithWeels.transform.position.y, target.GetAttackPoint().position.z);
+
+        Quaternion wheelsRotation = Quaternion.LookRotation(canonWithWeels.transform.position - targetPositionSameHeight);
+        canonWithWeels.transform.rotation = wheelsRotation;
+
+        // Rotation on X-Axis
+
+
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
@@ -64,7 +74,8 @@ public class Tower : Building
     public override void TargetStart()
     {
         attackPoint = transform.Find("AttackPoint").transform;
-        canon = transform.Find("Canon").Find("Canon");
+
+
         model.AddTarget(this);
         Killed += model.OnKilled;
         target = model.GetNearestTargetFrom(this);
