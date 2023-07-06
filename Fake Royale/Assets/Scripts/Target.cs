@@ -12,14 +12,14 @@ public abstract class Target : MonoBehaviour
     private HealthBar healthBar;
     private GameObject canvas;
 
-    [SerializeField] private ParticleSystem deathEffect;
+    [SerializeField] protected ParticleSystem deathEffect;
 
     protected Transform attackPoint;
 
     public delegate void KilledEventHandler(object source, EventArgs args);
     public event KilledEventHandler Killed;
 
-    private bool killed = false;
+    protected bool killed = false;
 
     private void Start()
     {
@@ -67,7 +67,7 @@ public abstract class Target : MonoBehaviour
         return attackPoint;
     }
 
-    public void Kill()
+    public virtual void Kill()
     {
         Instantiate(deathEffect, transform.position, transform.rotation);
         OnKilled();
@@ -91,5 +91,4 @@ public abstract class Target : MonoBehaviour
         model.AddTarget(this);
         Killed += model.OnKilled;
     }
-
 }

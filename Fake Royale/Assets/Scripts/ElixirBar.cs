@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+
 
 public class ElixirBar : MonoBehaviour
 {
     private Slider slider;
-    [SerializeField] private float refillRate = 0.8f;
+    [SerializeField] private float refillRate = 100f;
 
     [SerializeField] private int elixir;
     [SerializeField] private float slidervalue;
@@ -34,7 +32,7 @@ public class ElixirBar : MonoBehaviour
     void Update()
     {
         if (elixir >= 10f) return;
-        slidervalue = slidervalue += Time.deltaTime * 1 /refillRate * 0.1f;
+        slidervalue = slidervalue += Time.deltaTime * 1 / refillRate * 0.1f;
         slider.value = elixir / 10f + slidervalue;
     }
 
@@ -66,8 +64,7 @@ public class ElixirBar : MonoBehaviour
             }
             return;
         }
-        elixir++;
-        Debug.Log(elixir);
+        elixir++;   
         elexirFrames[elixir -1].Fill();
         slidervalue = 0;
         slider.value = elixir / 10f + slidervalue;

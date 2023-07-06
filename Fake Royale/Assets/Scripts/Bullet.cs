@@ -36,7 +36,8 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Tower") return;
+        if (collision.gameObject.tag == "Tower" ||
+            collision.gameObject.tag=="Player1Spawn" || collision.gameObject.tag=="Player2Spawn") return;
         //Explode
         Instantiate(explosion, transform.position, transform.rotation);
         model.DamageAllTargetsInRadius(transform.position, splashRadius, damage, tower);

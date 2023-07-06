@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class Model : MonoBehaviour
 {
 
     public List<Target> team1TargetsAlife = new List<Target>();
     public List<Target> team2TargetsAlife = new List<Target>();
+    
+    private List<Tower> towers1 = new List<Tower>();
+    private List<Tower> towers2 = new List<Tower>();
 
     [SerializeField] Card testCard;
     [SerializeField] Camera cam;
@@ -14,6 +18,9 @@ public class Model : MonoBehaviour
     [SerializeField] Transform targetParent;
 
     private bool player = false; // Multiplayer
+
+    private bool won = false;
+    [SerializeField] private GameObject wonScreen;
 
     [SerializeField] Canvas ui;
 
@@ -24,10 +31,27 @@ public class Model : MonoBehaviour
         elixirBar = ui.transform.Find("ElixirBar").GetComponent<ElixirBar>();
     }
 
+    public void CheckForVictory(Tower t)
+    {
+        List<Tower> toCheck = t.GetTeam() ? towers1 : towers2;
+        int count = 0;
+        foreach (Tower tower in toCheck) {
+            if (tower == t || tower == null) continue;
+            count++;
+        }
 
+        if (count == 0)
+        {
+            won = true;
+            GameObject screen = Instantiate(wonScreen, ui.transform);
+            string text = t.GetTeam() ? "Player 1 won" : "Player 2 won";
+            screen.transform.Find("Won").GetComponent<TextMeshProUGUI>().text = text;
+        }
+    }
 
     public Target GetNearestTargetFrom(Target attacker)
     {
+        if (won) { return attacker; }
         List<Target> validTargets = GetValidTargets(attacker);
 
         float minimumDistance = float.MaxValue;
@@ -49,6 +73,7 @@ public class Model : MonoBehaviour
 
     public void DamageAllTargetsInRadius(Vector3 origin, float radius, float damage, Target attacker)
     {
+        if (won) return;
         List<Target> valid = GetValidTargets(attacker);
         List<Target> toKill = new List<Target>();
 
@@ -123,6 +148,7 @@ public class Model : MonoBehaviour
     // Event called when any object is killed
     public void OnKilled(object source, EventArgs args)
     {
+        if (won) return;
         Target killed = (Target)source;
         bool team = killed.GetTeam();
         (team ? team2TargetsAlife : team1TargetsAlife).Remove(killed);
@@ -165,5 +191,14 @@ public class Model : MonoBehaviour
         {
             Instantiate(info.fighter, pos, Quaternion.Euler(0, 0, 0), targetParent).GetComponent<Target>().Setup(team);
         }
+    }
+
+    public void AddTower(Tower t)
+    {
+        bool team = t.GetTeam();
+        if (team)
+        {
+            towers1.Add(t);
+        } else { towers2.Add(t);}
     }
 }

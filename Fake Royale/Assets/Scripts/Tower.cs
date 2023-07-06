@@ -64,7 +64,14 @@ public class Tower : Building
         shot.GetComponent<Bullet>().SetupBullet(target.GetAttackPoint().position + offset, this);
     }
 
-
+    public override void Kill()
+    {
+        model.CheckForVictory(this);
+        Instantiate(deathEffect, transform.position, transform.rotation);
+        OnKilled();
+        killed = true;
+        Destroy(gameObject);
+    }
 
     public int GetId()
     {
@@ -77,6 +84,7 @@ public class Tower : Building
 
 
         model.AddTarget(this);
+        model.AddTower(this);
         Killed += model.OnKilled;
         target = model.GetNearestTargetFrom(this);
         StartCoroutine(CalulateDestination());

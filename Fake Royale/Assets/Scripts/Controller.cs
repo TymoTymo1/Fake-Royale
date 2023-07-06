@@ -24,7 +24,19 @@ public class Controller : MonoBehaviour
 
             if (Physics.Raycast(inputRay, out RaycastHit hit))
             {
-                model.SpawnTarget(testModel, hit.point, false);
+                while (hit.collider.tag == "Tower")
+                {
+                    Vector3 recastOrigin = hit.point + (inputRay.direction.normalized*0.5f);
+                    Ray recast = new Ray(recastOrigin, inputRay.direction);
+                    if (Physics.Raycast(recast, out RaycastHit hit2))
+                    {
+                        hit = hit2;
+                    }
+                }
+                if (hit.collider.tag == "Player1Spawn")
+                {
+                    model.SpawnTarget(testModel, hit.point, false);
+                }
             }
         }
         if (Input.GetMouseButtonDown(1))
@@ -33,6 +45,7 @@ public class Controller : MonoBehaviour
 
             if (Physics.Raycast(inputRay, out RaycastHit hit))
             {
+                if (hit.collider.tag != "Player2Spawn") return;
                 model.SpawnTarget(testModel, hit.point, true);
             }
         }
