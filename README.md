@@ -1,2 +1,3 @@
 # Casino-Game
-2d/3d Casino-Game made in Unity with C# for Software Engineering Project
+3D Clash-Royale like Game made with C# and Unity for software engineering group project. 
+Key features: Pathfinding, Custom made UI and models.
